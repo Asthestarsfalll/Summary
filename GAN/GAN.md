@@ -36,11 +36,11 @@
 
    - GAN包括**生成器**和**判别器**，基础结构如下：
 
-     ​	![image-20210417120842697](D:\UserData\Desktop\学习报告\GAN\image-20210417120842697.png)
+     ![](image-20210417120842697.png)
 
    - Auto Encoder：
 
-      ![image-20210417121858949](D:\UserData\Desktop\学习报告\GAN\image-20210417121858949.png)
+      ![](image-20210417121858949.png)
 
      我们对整个网络进行训练，但是最终只保留decoder部分，那么它与GAN有什么区别呢
 
@@ -52,17 +52,17 @@
 
    - 生成器将输入的随机噪声由原来的分布映射到最终所需要的分布，并由判别器与其对抗来不断优化。
 
-     ![image-20210417123127645](D:\UserData\Desktop\学习报告\GAN\image-20210417123127645.png)
+     ![](image-20210417123127645.png)
 
    - 判别器训练：
 
-     ![image-20210417123342968](D:\UserData\Desktop\学习报告\GAN\image-20210417123342968.png)
+     ![](image-20210417123342968.png)
 
      判别器训练时会冻结生成器的参数，**且将生成的fake image标签置为0**，其损失函数为二分类的交叉熵函数。
 
    - 生成器训练：
 
-     ![image-20210417123538327](D:\UserData\Desktop\学习报告\GAN\image-20210417123538327.png)
+     ![](image-20210417123538327.png)
 
      生成器训练时同样会固定判别器的参数，此时判别器相当于一个损失函数。我们去掉不相关的部分可得到如下：
      $$
@@ -72,7 +72,7 @@
 
    - GAN的目标：
 
-     ![image-20210417124856695](D:\UserData\Desktop\学习报告\GAN\image-20210417124856695.png)
+     ![](image-20210417124856695.png)
 
 ### 1.3   DCGAN
 
@@ -80,11 +80,11 @@
 
    最初的GAN：
 
-   ![image-20210417125359111](D:\UserData\Desktop\学习报告\GAN\image-20210417125359111.png)
+   ![](image-20210417125359111.png)
 
    DCGAN(Deep Convlutional GAN)：	![img](https://img-blog.csdnimg.cn/20181116100629968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNTk0Mzgw,size_16,color_FFFFFF,t_70)
 
-   ![image-20210417125813631](D:\UserData\Desktop\学习报告\GAN\image-20210417125813631.png)
+   ![](image-20210417125813631.png)
 
 2. 生成手写数字训练过程代码：
 
