@@ -35,11 +35,12 @@ kernel generated based on input featrue map(self-attention的一种体现？) to
 
 ```python
 class Involution(nn.Module):
-    def __init__(self, channel, group, kernel, s, ratio):
+    def __init__(self, channel, group, kernel, s):
         super(Involution, self).__init__()
         self.channel = channel
         self.group = group
         self.kernel_size = kernel
+        ratio=4
 
         self.o = nn.AvgPool2d(s, s) if s > 1 else nn.Identity()
         self.reduce = nn.Sequential(
@@ -88,7 +89,6 @@ class Involution(nn.Module):
      HWK^2C_{in}C_{out}
      $$
      
-     
    - 对于Involution，其参数量为：
      $$
      \frac{C^2+CGK^2}{r}
@@ -97,9 +97,9 @@ class Involution(nn.Module):
      $$
      HWK^2C
      $$
-
+   
    可以看到，involution的计算量与通道数呈线性关系。
-
+   
 2. 能有效建模长距离关系
 
    相较于Convolution，involution kernel可以使用更大的卷积核而不过多增加其参数量，其感受野也就越大。
