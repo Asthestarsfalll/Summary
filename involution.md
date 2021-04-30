@@ -26,7 +26,7 @@ kernel generated based on input featrue map(self-attention的一种体现？) to
 
 一种简单的kernel generation function,方便起见以一个像素为例
 
-![image-20210426192156487](.\images\image-20210426192156487.png)
+![image-20210426192156487](images\image-20210426192156487.png)
 
 1. inputs为维度1×1×C；
 2. 线性变换：$W_0$：通道压缩，节省计算量；$W_1$：首先变为1×1×(K×K×G)，再拆分为G组，最后变换为K×K×G；
@@ -122,7 +122,7 @@ class Involution(nn.Module):
 
 可以看到与self-attention之间的相似性：
 
-![image-20210427212347084](.\images\image-20210427212347084.png)
+![image-20210427212347084](images\image-20210427212347084.png)
 
 相似：
 
@@ -138,7 +138,7 @@ class Involution(nn.Module):
 
 ## Ablantion    Analysis
 
-![image-20210427213135224](.\images/image-20210427213135224.png)
+![image-20210427213135224](images/image-20210427213135224.png)
 
 ## 其他
 
