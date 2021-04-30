@@ -24,13 +24,13 @@ involution kernel 的尺寸为B,G,KK,H,W.
 
 kernel generated based on input featrue map(self-attention的一种体现？) to ensure kernel size aligned with the input tensor size
 
-一种简单的kernel generation function
+一种简单的kernel generation function,方便起见以一个像素为例
 
 ![image-20210426192156487](images\image-20210426192156487.png)
 
 1. inputs为维度1×1×C；
 2. 线性变换：$W_0$：通道压缩，节省计算量；$W_1$：首先变为1×1×(K×K×G)，再拆分为G组，最后变换为K×K×G；
-3. 生成的kernel与(i,j)领域进行乘加操作，因为纬度不同，需要进行广播，得到大小为k×k×C；
+3. 生成的kernel与(i,j)领域进行乘加操作，因为维度不同，需要进行广播，得到大小为k×k×C；
 4. 最后进行聚合，输出大小为1×1×C。
 
 ```python
@@ -57,7 +57,7 @@ class Involution(nn.Module):
         kernel = self.span(self.reduce(self.o(x)))  # B,KKG,H,W
         B, _, H, W = kernel.shape
         kernel = kernel.view(B, self.group, self.kernel_size **
-                             2, H, W).unsqueeze(2)  # B,G,1,kk,H,w
+                             2, H, W).unsqueeze(2)  # B,G,1,kk,H,W
 
         x_unfolded = self.unfold(x)  # B,CKK,HW
         x_unfolded = x_unfolded.view(
@@ -104,13 +104,15 @@ class Involution(nn.Module):
 
    相较于Convolution，involution kernel可以使用更大的卷积核而不过多增加其参数量，其感受野也就越大。
 
-3. involution是动态的，而convolution是静态的
+3. involution是动态的，而convolution是静态的。
 
 缺点：
 
 1. 通道间的信息交换在一定程度上受到影响
 
-   虽然同一组内共享同一个kernel，但是不同组通道间的信息交换还是会受到影响
+   虽然同一组内共享同一个kernel，但是不同组通道间的信息交换还是会受到影响。
+   
+2. 速度相较于Convolution没有优势
 
 
 
@@ -129,8 +131,10 @@ class Involution(nn.Module):
 
 不同：
 
-1. Involution潜在编码了位置信息
-2. 
+1. 相比于self-attention，Involution潜在编码了位置信息，而self-attention需要position encoding来区分位置信息
+2. 不在需要使用Q-K，仅依靠单个像素生成kernel，而非依靠像素间的关系生成attention map
+
+总结：self-attention是Involution的一种实例化，且Involution的表达更为宽泛和简洁。
 
 ## Ablantion    Analysis
 
